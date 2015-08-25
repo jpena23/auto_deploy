@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # this script will:
-# automate the deployment of a sample application from github
-# install any necessary dependencies needed for this to work
+# automate the deployment of a yelp pizza sample application from github
+# install any necessary dependencies 
 # configure a custom firewall
 #
 # NOTE: this script is built for a Linux OS CentOS/Redhat environment 
