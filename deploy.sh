@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # this script will:
-# automate the deployment of a sample application from github.
-# install any necessary dependencies needed for this to work.
+# automate the deployment of a sample application from github
+# install any necessary dependencies needed for this to work
 # configure a custom firewall
 #
 # NOTE: this script is built for a Linux OS CentOS/Redhat environment 
@@ -13,7 +13,7 @@
 dep_list = 'git curl openssl php php-mysql mysql mysql-server'
 app_dir="/var/www/html"
 
-# this function will check for exit code and break out upon error.
+# this function will check for exit code and break out upon error
 check_exit() {
     exit_code = $?
     if [ $exit_code != 0 ]; then
@@ -61,7 +61,7 @@ echo "creating database..."
 echo "please enter your MYSQL password (default password is empty)..."
 echo "create database paypal_pizza_app" | mysql -u $USER -p
 
-# if mysql is installed already, puts in user pw, otherwise puts in default blank pw.
+# if mysql is installed already, puts in user pw, otherwise puts in default blank pw
 if [ -n "$pw" ]; then
     sed -i '20s/root/$pw/' bootstrap.php
 else
