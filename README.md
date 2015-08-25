@@ -7,8 +7,8 @@ Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.4 in parti
 Instructions:
 
 Download the "deploy.sh" script into a directory of your choice. <br />
-Navigate to this directory "cd /path/to/your/directory".
-Run "bash deploy.sh" from the command line. 
-The script may prompt you to enter your sudo credentials if not ran as a priveledged user.
-The script may prompt you to enter in your MySQL credentials if you have already have it installed.
-NOTE: the default password for the MySQL root password is empty.
+Navigate to this directory "cd /path/to/your/directory". <br />
+Run "bash deploy.sh" from the command line. <br />
+The script may prompt you to enter your sudo credentials if not ran as a priveledged user. <br />
+The script may prompt you to enter in your MySQL credentials if you have already have it installed. <br />
+NOTE: the default password for the MySQL root password is empty. <br />
