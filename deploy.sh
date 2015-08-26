@@ -86,7 +86,7 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 
-# allow ssh (port 22) / rdp (port 3389) traffic from specific subnets
+# allow ssh (port 22) / rdp (port 3389) traffic from specific subnets below
 # 10.0.0.0/8, 192.168.0.0/16, 172.0.0.0/8
 echo "configuring custom firewall..."
 for ip in $sub_nets; do
@@ -97,16 +97,16 @@ done
 # allow traffic over icmp and tcp ports 80 and 443 from everywhere
 iptables -A INPUT -p icmp -j ACCEPT
 iptables -A OUTPUT -p icmp -j ACCEPT
-iptables -A INPUT -p tcp --sport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --sport 443 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
 
 # allow traffic over dns ports
-iptables -A INPUT -p tcp --sport 53 -j ACCEPT
-iptables -A INPUT -p udp --sport 53 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 53 -j ACCEPT
+iptables -A INPUT -p udp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
 
 # drop anything that doesn't abide by rules above 
 iptables -A INPUT -j DROP		
