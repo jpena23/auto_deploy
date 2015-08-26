@@ -5,7 +5,8 @@
 # install any necessary dependencies 
 # configure a custom firewall
 #
-# NOTE: this script is built for a Linux OS CentOS/Redhat environment 
+# NOTE: this script is built for a Linux OS CentOS/Redhat environment
+# NOTE: must be ran in root user
 # by John Pena | August 24, 2015
 #
 
