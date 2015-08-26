@@ -6,9 +6,14 @@
 # configure a custom firewall
 #
 # NOTE: this script is built for a Linux OS CentOS/Redhat environment
-# NOTE: must be ran in root user
+# NOTE: must be ran by the root user
 # by John Pena | August 24, 2015
 #
+
+if [ "$UID" != 0 ]; then
+    echo "this script must be ran by the root user."
+    exit 1
+fi
 
 # this function will check for exit code and break out upon error
 check_exit() {
@@ -79,7 +84,6 @@ iptables -t nat -F
 iptables -t mangle -F
 iptables -F
 iptables -X
-sleep 5
 
 echo "configuring custom firewall..."
 # allow ss/rdp traffic from specific subnets
@@ -98,4 +102,4 @@ iptables -A INPUT -j DROP
 iptables -A OUTPUT -j DROP
 
 echo "Finished! Paypal Pizza App Installed and Ready To Use."
-echo "Navigate to: http://localhost/rest-api-sample-app-php on your favorite browser."
+echo "Navigate to http://localhost/rest-api-sample-app-php on your favorite browser."
