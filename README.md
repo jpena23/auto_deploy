@@ -12,5 +12,5 @@ Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.4 in parti
 * The script may prompt you to enter in your MySQL credentials if you have already have it installed. <br />
 
 ## Note <br />
-Must be ran by root user.
+Must be ran by root user. <br />
 The default password for the MySQL root password is an empty value. <br />
