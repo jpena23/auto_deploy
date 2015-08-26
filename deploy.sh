@@ -97,3 +97,4 @@ iptables -A INPUT -j DROP
 iptables -A OUTPUT -j DROP
 
 echo "Finished! Paypal Pizza App Installed and Ready To Use."
+echo "Navigate to: http://localhost/rest-api-sample-app-php on your favorite browser."
