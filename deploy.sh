@@ -76,8 +76,8 @@ fi
 cd $app_dir/install
 php create_tables.php
 
-echo "flushing firewall rules..."
 # flush firewall rules
+echo "flushing firewall rules..."
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
@@ -86,9 +86,9 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 
-echo "configuring custom firewall..."
 # allow ssh (port 22) / rdp (port 3389) traffic from specific subnets
 # 10.0.0.0/8, 192.168.0.0/16, 172.0.0.0/8
+echo "configuring custom firewall..."
 for ip in $sub_nets; do
     iptables -A INPUT -s $ip -p tcp --dport 22  -j ACCEPT
     iptables -A INPUT -s $ip -p tcp --dport 3389 -j ACCEPT
