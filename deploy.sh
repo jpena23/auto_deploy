@@ -32,20 +32,10 @@ mkdir $app_dir
 
 # check if mysql is installed already, get password
 val=`rpm -qa |grep mysql-server`
-if [ -n $val ]; then
+if [ -n "$val" ]; then
     echo -n "please enter your mysql password: "
     read pw
 fi
-
-# flush firewall rules
-echo "flushing firewall rules..."
-sudo iptables -P INPUT ACCEPT
-sudo iptables -P FORWARD ACCEPT
-sudo iptables -P OUTPUT ACCEPT
-sudo iptables -t nat -F
-sudo iptables -t mangle -F
-sudo iptables -F
-sudo iptables -X 
 
 # install dependencies, download paypal app setup via git
 echo "installing dependencies and downloading app..."
@@ -55,7 +45,7 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=$app_dir
 
 # run update composer
 echo "updating composer..."
-cd $app_dir/rest-api-sample-app-php
+cd $app_dir
 php composer.phar update
 
 # start services if not yet running
@@ -78,5 +68,32 @@ fi
 # creating neccesary tables in mysql
 cd $app_dir/install
 php create_tables.php
+
+echo "flushing firewall rules..."
+# flush firewall rules
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t nat -F
+iptables -t mangle -F
+iptables -F
+iptables -X
+sleep 5
+
+echo "configuring custom firewall..."
+# allow ss/rdp traffic from specific subnets
+# allow traffic over icmp and tcp ports 80 and 443 from everywhere
+# drop all other traffic
+iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 22  -j ACCEPT
+iptables -A INPUT -s 192.168.0.0/16 -p  tcp --dport 22  -j ACCEPT
+iptables -A INPUT -s 172.0.0.0/8 -p tcp --dport 22  -j ACCEPT
+iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 3389 -j ACCEPT
+iptables -A INPUT -s 192.168.0.0/16 -p tcp --dport 3389 -j ACCEPT
+iptables -A INPUT -s 172.0.0.0/8 -p tcp --dport 3389 -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -j DROP		
+iptables -A OUTPUT -j DROP
 
 echo "Finished! Paypal Pizza App Installed and Ready To Use."
