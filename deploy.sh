@@ -25,9 +25,10 @@ check_exit() {
     fi
 }
 
-# list of dependencies / htdocs directory
+# list of dependencies / custom subnets / htdocs directory 
 dep_list='git curl openssl php php-mysql mysql mysql-server'
-app_dir="/var/www/html/rest-api-sample-app-php"
+sub_nets='10.0.0.0/8 192.168.0.0/16 172.0.0.0/8'
+app_dir='/var/www/html/rest-api-sample-app-php'
 
 # remove directory if it exists to start clean and avoid errors
 if [ -d $app_dir ]; then
@@ -43,13 +44,13 @@ if [ -n "$val" ]; then
     read pw
 fi
 
-# install dependencies, download paypal app setup via git
+# install dependencies, download paypal app setup via git, install composer
 echo "installing dependencies and downloading app..."
 sudo yum install $dep_list -y
 git clone https://github.com/paypal/rest-api-sample-app-php $app_dir
 curl -sS https://getcomposer.org/installer | php -- --install-dir=$app_dir
 
-# run update composer
+# run composer update
 echo "updating composer..."
 cd $app_dir
 php composer.phar update
@@ -86,18 +87,28 @@ iptables -F
 iptables -X
 
 echo "configuring custom firewall..."
-# allow ss/rdp traffic from specific subnets
+# allow ssh (port 22) / rdp (port 3389) traffic from specific subnets
+# 10.0.0.0/8, 192.168.0.0/16, 172.0.0.0/8
+for ip in $sub_nets; do
+    iptables -A INPUT -s $ip -p tcp --dport 22  -j ACCEPT
+    iptables -A INPUT -s $ip -p tcp --dport 3389 -j ACCEPT
+done
+
 # allow traffic over icmp and tcp ports 80 and 443 from everywhere
-# drop all other traffic
-iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 22  -j ACCEPT
-iptables -A INPUT -s 192.168.0.0/16 -p  tcp --dport 22  -j ACCEPT
-iptables -A INPUT -s 172.0.0.0/8 -p tcp --dport 22  -j ACCEPT
-iptables -A INPUT -s 10.0.0.0/8 -p tcp --dport 3389 -j ACCEPT
-iptables -A INPUT -s 192.168.0.0/16 -p tcp --dport 3389 -j ACCEPT
-iptables -A INPUT -s 172.0.0.0/8 -p tcp --dport 3389 -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j ACCEPT
+iptables -A INPUT -p tcp --sport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
+
+# allow traffic over dns ports
+iptables -A INPUT -p tcp --sport 53 -j ACCEPT
+iptables -A INPUT -p udp --sport 53 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+
+# drop anything that doesn't abide by rules above 
 iptables -A INPUT -j DROP		
 iptables -A OUTPUT -j DROP
 
