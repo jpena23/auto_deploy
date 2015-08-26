@@ -40,12 +40,14 @@ mkdir $app_dir
 # check if mysql is installed already, get password
 val=`rpm -qa |grep mysql-server`
 if [ -n "$val" ]; then
-    echo -n "please enter your mysql password: "
+    echo -n "please enter your mysql password (default password is empty): "
     read pw
 fi
 
 # install dependencies, download paypal app setup via git, install composer
+
 echo "installing dependencies and downloading app..."
+
 sudo yum install $dep_list -y
 git clone https://github.com/paypal/rest-api-sample-app-php $app_dir
 curl -sS https://getcomposer.org/installer | php -- --install-dir=$app_dir
@@ -62,7 +64,7 @@ service httpd start
 
 # create database
 echo "creating database..."
-echo "please enter your MYSQL password (default password is empty)..."
+echo -n "please enter your mysql password (default password is empty): "
 echo "create database paypal_pizza_app" | mysql -u $USER -p
 
 # if mysql is installed already, puts in user pw, otherwise puts in default blank pw
@@ -103,10 +105,11 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
 
 # allow traffic over dns ports
-iptables -A INPUT -p tcp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 53 -j ACCEPT
-iptables -A INPUT -p udp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
+# commented out for assignment
+# iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+# iptables -A OUTPUT -p tcp --sport 53 -j ACCEPT
+# iptables -A INPUT -p udp --dport 53 -j ACCEPT
+# iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
 
 # drop anything that doesn't abide by rules above 
 iptables -A INPUT -j DROP		
