@@ -46,9 +46,7 @@ if [ -n "$val" ]; then
 fi
 
 # install dependencies, download paypal app setup via git, install composer
-
 echo "installing dependencies and downloading app..."
-
 sudo yum install $dep_list -y
 git clone https://github.com/paypal/rest-api-sample-app-php $app_dir
 curl -sS https://getcomposer.org/installer | php -- --install-dir=$app_dir
