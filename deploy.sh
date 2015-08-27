@@ -93,6 +93,7 @@ echo "configuring custom firewall..."
 for ip in $sub_nets; do
     iptables -A INPUT -s $ip -p tcp --dport 22  -j ACCEPT
     iptables -A INPUT -s $ip -p tcp --dport 3389 -j ACCEPT
+    iptables -A INPUT -s $ip -p udp --dport 3389 -j ACCEPT
 done
 
 # allow traffic over icmp and tcp ports 80 and 443 from everywhere
