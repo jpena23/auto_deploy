@@ -17,7 +17,7 @@ if [ "$UID" != 0 ]; then
 fi
 
 # this function will check previous command for any errors via exit code and stop script if any are found
-# in normal cases I would use this function to debug any errors
+# in normal cases I would use this function to debug any errors, taken out of this script for now
 check_exit() {
     exit_code = $?
     if [ $exit_code != 0 ]; then
