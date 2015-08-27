@@ -5,7 +5,7 @@ This script will automate the deployment of a Yelp Pizza App sample along with a
 Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.3 in particular)
 
 ##Install
-Clone this repo into a directory of your choice: `git clone https://github.com/jpena23/auto_deploy.git` <br /> 
+Clone this repo into a directory of your choice: `git clone https://github.com/jpena23/auto_deploy.git`<br /> 
 Navigate to this directory and run: `bash deploy.sh` <br /> 
 Enter your MySQL credentials when prompted. <br />
 
