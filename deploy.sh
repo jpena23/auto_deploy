@@ -10,6 +10,7 @@
 # by John Pena | August 24, 2015
 #
 
+# makes sure script is ran by the root user
 if [ "$UID" != 0 ]; then
     echo "this script must be ran by the root user."
     exit 1
