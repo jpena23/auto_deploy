@@ -90,10 +90,10 @@ iptables -X
 # allow ssh (port 22) / rdp (port 3389) traffic from specific subnets below
 # 10.0.0.0/8, 192.168.0.0/16, 172.0.0.0/8
 echo "configuring custom firewall..."
-for ip in $sub_nets; do
-    iptables -A INPUT -s $ip -p tcp --dport 22  -j ACCEPT
-    iptables -A INPUT -s $ip -p tcp --dport 3389 -j ACCEPT
-    iptables -A INPUT -s $ip -p udp --dport 3389 -j ACCEPT
+for sub in $sub_nets; do
+    iptables -A INPUT -s $sub -p tcp --dport 22  -j ACCEPT
+    iptables -A INPUT -s $sub -p tcp --dport 3389 -j ACCEPT
+    iptables -A INPUT -s $sub -p udp --dport 3389 -j ACCEPT
 done
 
 # allow traffic over icmp and tcp ports 80 and 443 from everywhere
