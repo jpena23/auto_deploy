@@ -2,7 +2,7 @@
 
 This script will automate the deployment of a Yelp Pizza App sample along with any required dependencies, if not already installed.
 
-Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.4 in particular)
+Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.3 in particular)
 
 ##Instructions 
 Download or clone the "deploy.sh" script into a directory of your choice. <br /> 
