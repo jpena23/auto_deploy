@@ -11,4 +11,4 @@ Enter your MySQL credentials when prompted. <br />
 
 ##Notes 
 Must be ran by root user. <br />
-The default password for the MySQL root password is empty. <br />
+The default password for the MySQL root user is empty. <br />
