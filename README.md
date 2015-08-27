@@ -6,9 +6,9 @@ Environment: Linux OS - CentOS/RedHat (I used this script on CentOS 6.3 in parti
 
 ##Install
 Clone this repo into a directory of your choice: `git clone https://github.com/jpena23/auto_deploy.git`<br /> 
-Navigate to this directory and run: `bash deploy.sh` <br /> 
-Enter your MySQL credentials when prompted. <br />
+Navigate to this directory and run: `bash deploy.sh`<br /> 
+Enter your MySQL credentials when prompted.<br />
 
 ##Notes 
-Must be ran by root user. <br />
-The default password for the MySQL root user is empty. <br />
+Must be ran by root user.<br />
+The default password for the MySQL root user is empty.<br />
